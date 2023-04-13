@@ -15,7 +15,8 @@
       "@Data/*": ["src/data/*"],
       "@Utils/*": ["src/utils/*"],
       "@Interfaces/*": ["src/Interfaces/*"],
-      "@Assets/*": ["src/assets/*"]
+      "@Assets/*": ["src/assets/*"],
+      "@Routes/*": ["src/routes/*"]
     }
   }
 }
