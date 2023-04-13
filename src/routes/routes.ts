@@ -1,29 +1,42 @@
 import { Details, Error404, Main, Movies, TVShow } from '@Pages/index';
+import { getMovies, getPopularMovies, getPopularTV } from '@src/data/actions';
+import { type RouteObject } from 'react-router-dom';
 
 export default [
   {
     path: '/',
-    Element: Main,
-    isIndex: true
+    Component: Main,
+    index: true,
+    loader: getMovies
   },
   {
     path: '/movies',
-    Element: Movies,
-    isIndex: false
+    Component: Movies,
+    index: false,
+    loader: getPopularMovies
   },
   {
     path: '/tv-show',
-    Element: TVShow,
-    isIndex: false
+    Component: TVShow,
+    index: false,
+    loader: getPopularTV
   },
   {
     path: 'detail/:id',
-    Element: Details,
-    isIndex: false
+    Component: Details,
+    index: false
+    // loader: () => {}
+  },
+  {
+    path: 'detail-tv/:id',
+    Component: Details,
+    index: false
+    // loader: () => {}
   },
   {
     path: '*',
-    Element: Error404,
-    isIndex: false
+    Component: Error404,
+    index: false
+    // loader: () => {}
   }
-];
+] as RouteObject[];

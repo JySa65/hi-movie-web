@@ -9,7 +9,7 @@ const links = [
   },
   {
     path: '/movies',
-    name: 'Movies'
+    name: 'Peliculas'
   },
   {
     path: '/tv-show',

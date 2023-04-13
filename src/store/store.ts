@@ -1,6 +1,9 @@
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { MovieSlice } from './modules';
 
-export const rootReducer = combineReducers({});
+export const rootReducer = combineReducers({
+  [MovieSlice.name]: MovieSlice.reducer
+});
 
 const store = configureStore({
   reducer: rootReducer,

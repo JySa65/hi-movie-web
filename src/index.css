@@ -8,5 +8,31 @@
   }
 }
 
+::-webkit-scrollbar {
+  width: 4px;    
+  height: 4px;    
+}
 
+::-webkit-scrollbar-thumb {
+  background: theme(colors.red.primary);
+  border-radius: 4px;
+}
 
+::-webkit-scrollbar-thumb:active {
+  background-color: theme(colors.red.primary);
+} 
+ 
+::-webkit-scrollbar-thumb:active {
+  background-color: theme(colors.red.primary);
+}
+
+::-webkit-scrollbar-track {
+  background: theme(colors.black.primary);
+  border-radius: 4px;
+}
+
+/* Cambiamos el fondo cuando esté en active o hover */
+::-webkit-scrollbar-track:hover,
+::-webkit-scrollbar-track:active {
+  background: theme(colors.black.primary);
+}

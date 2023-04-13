@@ -5,17 +5,21 @@ import './styles.css';
 interface ILink {
   path: string;
   name: string;
+  open: boolean;
+  close: () => void;
 }
 
-const Link = ({ path, name }: ILink): JSX.Element => {
+const Link = ({ path, name, open, close }: ILink): JSX.Element => {
   const location = useLocation();
 
   return (
     <LinkRouter
-      className={clsx({
+      className={clsx('transition-all duration-700 ease-out', {
+        hidden: !open,
         link: location.pathname !== path,
         'link-selected': location.pathname === path
       })}
+      onClick={close}
       to={path}
     >
       {name}
