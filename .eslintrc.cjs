@@ -28,6 +28,7 @@ module.exports = {
   rules: {
     'prettier/prettier': [RULES.ERROR, {}, { usePrettierrc: true }], // Includes .prettierrc.js rules
     'react/react-in-jsx-scope': RULES.OFF,
+    '@typescript-eslint/strict-boolean-expressions': RULES.OFF,
     '@typescript-eslint/no-unused-vars': [
       RULES.ERROR,
       {

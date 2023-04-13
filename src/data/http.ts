@@ -11,14 +11,18 @@ const localAxios = axios.create({
 });
 
 localAxios.interceptors.response.use(
-  function (response) {
+  (response) => {
     return {
       status: response.status,
       ...response.data
     };
   },
-  async function (error) {
-    return await Promise.reject(error);
+  async (error) => {
+    const _error = {
+      status: error?.response?.status,
+      ...error?.response?.data
+    };
+    return await Promise.reject(_error);
   }
 );
 

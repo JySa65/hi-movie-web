@@ -1,11 +1,12 @@
+import { useEffect, useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
 import { useRequest } from '@src/hooks';
-import { getMovieDetail, getRecomendationMovieDetail, getSimilarMovieDetail } from '@src/data/actions';
-import { useEffect, useState } from 'react';
+import { getTVDetail, getRecomendationTVDetail, getSimilarTVDetail } from '@src/data/actions';
 import Error404 from '../Error404';
 import { SummaryMovie } from '@src/components/Organisms';
-import type { MovieDetail } from '@src/Interfaces/movies';
 import { Fallback, SwiperTemplate } from '@src/components/Templates';
+import type { TVDetail } from '@src/Interfaces/tv';
+import type { MovieDetail } from '@src/Interfaces/movies';
 
 const Details = (): JSX.Element => {
   const [show404, setShow404] = useState(false);
@@ -13,11 +14,10 @@ const Details = (): JSX.Element => {
   const navigate = useNavigate();
   const dataParams = useParams();
   const [id, setId] = useState<string>(dataParams?.id as string);
+  const { data, error, isLoading } = useRequest(() => getTVDetail(id), id === '');
 
-  const { data = {}, error, isLoading } = useRequest(() => getMovieDetail(id));
-
-  const { data: similars = [] } = useRequest(() => getSimilarMovieDetail(id), waitFetcher);
-  const { data: recomendations = [] } = useRequest(() => getRecomendationMovieDetail(id), waitFetcher);
+  const { data: similars = [] } = useRequest(() => getSimilarTVDetail(id), waitFetcher);
+  const { data: recomendations = [] } = useRequest(() => getRecomendationTVDetail(id), waitFetcher);
 
   useEffect(() => {
     if (error !== undefined && !(error as any)?.success) {
@@ -26,7 +26,7 @@ const Details = (): JSX.Element => {
   }, [error]);
 
   useEffect(() => {
-    if (Object.keys(data).length >= 1) {
+    if (Object.keys(data ?? {}).length >= 1) {
       setWaitFetcher(false);
     }
   }, [data]);
@@ -43,18 +43,24 @@ const Details = (): JSX.Element => {
   }
 
   if (!isLoading && data) {
+    const _data = {
+      ...(data as TVDetail),
+      title: data?.name,
+      original_title: data?.original_name,
+      release_date: data?.first_air_date
+    };
     return (
       <div>
-        <SummaryMovie movie={data as MovieDetail} showMore={false} />
+        <SummaryMovie movie={_data as unknown as MovieDetail} showMore={false} />
         {similars.length >= 1 && (
-          <SwiperTemplate to={`/detail`} autoPlayDelay={3000} datas={similars} title="Peliculas Similares" />
+          <SwiperTemplate to="/detail-tv" autoPlayDelay={3000} datas={similars} title="TV Similares" />
         )}
         {recomendations.length >= 1 && (
           <SwiperTemplate
-            to={`/detail`}
+            to="/detail-tv"
             autoPlayDelay={3500}
             datas={recomendations}
-            title="Peliculas Recomendadas"
+            title="TV Recomendadas"
           />
         )}
       </div>

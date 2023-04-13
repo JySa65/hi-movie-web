@@ -1,9 +1,14 @@
 import { Link } from 'react-router-dom';
 
-import type { Movie } from '@Interfaces/movies';
+import type { Movie, MovieDetail } from '@Interfaces/movies';
 import { PosterImage } from '@Molecules/index';
 
-const SummaryMovie = ({ movie }: { movie: Movie }): JSX.Element => {
+interface ISummaryMovie {
+  movie: Movie | MovieDetail;
+  showMore: boolean;
+}
+
+const SummaryMovie = ({ movie, showMore = false }: ISummaryMovie): JSX.Element => {
   return (
     <div className="h-screen relative">
       {Boolean(movie.backdrop_path) && (
@@ -34,18 +39,20 @@ const SummaryMovie = ({ movie }: { movie: Movie }): JSX.Element => {
             </p>
 
             <div className="flex items-center">
-              <span className="bg-red-primary h-[10px] w-[10px] rounded mr-2" /> Imdb: {movie.vote_average}
+              <span className="bg-red-primary h-[10px] w-[10px] rounded mr-2" /> {movie.vote_average}
               /10
             </div>
           </div>
 
           <div className="actions">
-            <Link
-              to={`detail/${movie.id as number}`}
-              className=" text-white mt-6 bg-red-primary rounded-3xl font-semibold px-5 py-1 "
-            >
-              <span>Leer mas ...</span>
-            </Link>
+            {showMore && (
+              <Link
+                to={`detail/${movie.id as number}`}
+                className=" text-white mt-6 bg-red-primary rounded-3xl font-semibold px-5 py-1 "
+              >
+                <span>Leer mas ...</span>
+              </Link>
+            )}
           </div>
           <p className="text-white t text-justify overview">{movie.overview}</p>
         </div>

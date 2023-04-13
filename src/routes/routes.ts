@@ -1,4 +1,4 @@
-import { Details, Error404, Main, Movies, TVShow } from '@Pages/index';
+import { Details, Error404, Main, Movies, TVShow, DetailsTV } from '@Pages/index';
 import { getMovies, getPopularMovies, getPopularTV } from '@src/data/actions';
 import { type RouteObject } from 'react-router-dom';
 
@@ -25,18 +25,15 @@ export default [
     path: 'detail/:id',
     Component: Details,
     index: false
-    // loader: () => {}
   },
   {
     path: 'detail-tv/:id',
-    Component: Details,
+    Component: DetailsTV,
     index: false
-    // loader: () => {}
   },
   {
     path: '*',
     Component: Error404,
     index: false
-    // loader: () => {}
   }
 ] as RouteObject[];
